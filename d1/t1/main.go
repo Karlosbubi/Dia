@@ -18,7 +18,7 @@ func check(e error) {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("input.txt")
+	dat, err := ioutil.ReadFile("d1/t1/input.txt")
 	check(err)
 	//fmt.Print(string(dat))
 

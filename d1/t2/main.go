@@ -18,7 +18,7 @@ func check(e error) {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("input.txt")
+	dat, err := ioutil.ReadFile("d1/t2/input.txt")
 	check(err)
 	//fmt.Print(string(dat))
 
@@ -38,8 +38,9 @@ func main() {
 				check(err)
 				//fmt.Printf("i + j = %d\n", a+b)
 				if a+b+c == 2020 {
-					fmt.Println(a*b*c)
+					fmt.Println(a * b * c)
 				}
+			}
 		}
 	}
 }
