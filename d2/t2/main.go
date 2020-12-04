@@ -22,16 +22,21 @@ func validate(s string) bool {
 
 	n := strings.TrimSuffix(t[1], ":")
 
-	c := 0
-	for _, i := range t[2] {
-		if i == rune(n[0]) {
-			c++
-		}
+	l := len(t[2])
+
+	if a > l || b > l {
+		fmt.Println("too long")
+		return false
 	}
 
-	//fmt.Printf("%v mal %v in %v %v - %v dovon sind erwünscht, dehalb %v\n", c, n, t[2], a, b, c >= a && c <= b)
+	//fmt.Println(t[2])
 
-	if c >= a && c <= b {
+	if t[2][a-1] == n[0] && t[2][b-1] != n[0] {
+		//fmt.Println("true")
+		return true
+	}
+	if t[2][a-1] != n[0] && t[2][b-1] == n[0] {
+		//fmt.Println("true")
 		return true
 	}
 
@@ -40,7 +45,7 @@ func validate(s string) bool {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d2/t1/input.txt")
+	dat, err := ioutil.ReadFile("d2/t2/input.txt")
 	check(err)
 	//fmt.Print(string(dat))
 
