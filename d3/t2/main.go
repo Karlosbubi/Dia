@@ -18,6 +18,30 @@ func replaceAtIndex(in string, r rune, i int) string {
 	return string(out)
 }
 
+func checkTrees(dat []string, x int, y int) int {
+	count := 0
+	j := 0
+	for k, t := range dat {
+		if k%y == 0 {
+			if t[j] == '#' {
+				count++
+				fmt.Println(replaceAtIndex(t, 'X', j))
+			} else {
+				fmt.Println(replaceAtIndex(t, '0', j))
+			}
+			j = (j + x) % (len(t) - 1)
+			//fmt.Println(k)
+		} else {
+			fmt.Println(t)
+		}
+		//t := strings.Repeat(s, m)
+
+		//j = (j + x) % len(t)
+	}
+	//fmt.Println(count)
+	return count
+}
+
 func main() {
 
 	dat, err := ioutil.ReadFile("d3/t2/input.txt")
@@ -27,86 +51,17 @@ func main() {
 
 	s := strings.Split(string(dat), "\n")
 	result := 1
-	count := 0
-	j := 0
-	//m := (len(s) * 3) / 30
-	for _, t := range s {
 
-		//t := strings.Repeat(s, m)
-		if t[j] == '#' {
-			count++
-			//fmt.Println(replaceAtIndex(t, 'X', j))
-		} else {
-			//fmt.Println(replaceAtIndex(t, '0', j))
-		}
-		j = (j + 1) % 31
-	}
-	result = result * count
-	fmt.Println(count)
-	j = 0
-	count = 0
-	for _, t := range s {
-
-		//t := strings.Repeat(s, m)
-		if t[j] == '#' {
-			count++
-			//fmt.Println(replaceAtIndex(t, 'X', j))
-		} else {
-			//fmt.Println(replaceAtIndex(t, '0', j))
-		}
-		j = (j + 3) % 31
-	}
-	result = result * count
-	fmt.Println(count)
-	j = 0
-	count = 0
-	for _, t := range s {
-
-		//t := strings.Repeat(s, m)
-		if t[j] == '#' {
-			count++
-			//fmt.Println(replaceAtIndex(t, 'X', j))
-		} else {
-			//fmt.Println(replaceAtIndex(t, '0', j))
-		}
-		j = (j + 5) % 31
-	}
-	result = result * count
-	fmt.Println(count)
-	j = 0
-	count = 0
-	for _, t := range s {
-
-		//t := strings.Repeat(s, m)
-		if t[j] == '#' {
-			count++
-			//fmt.Println(replaceAtIndex(t, 'X', j))
-		} else {
-			//fmt.Println(replaceAtIndex(t, '0', j))
-		}
-		j = (j + 7) % 31
-	}
-	result = result * count
-	fmt.Println(count)
-	j = 0
-	count = 0
-	for k, t := range s {
-		if k%2 == 0 {
-			if t[j] == '#' {
-				count++
-				//fmt.Println(replaceAtIndex(t, 'X', j))
-			} else {
-				//fmt.Println(replaceAtIndex(t, '0', j))
-			}
-			//fmt.Println(k)
-		}
-		//t := strings.Repeat(s, m)
-
-		j = (j + 1) % 31
-	}
-	result = result * count
-	fmt.Println(count)
-	j = 0
+	result = checkTrees(s, 1, 1)
+	fmt.Println(checkTrees(s, 1, 1))
+	result = result * checkTrees(s, 3, 1)
+	fmt.Println(checkTrees(s, 3, 1))
+	result = result * checkTrees(s, 5, 1)
+	fmt.Println(checkTrees(s, 5, 1))
+	result = result * checkTrees(s, 7, 1)
+	fmt.Println(checkTrees(s, 7, 1))
+	result = result * checkTrees(s, 1, 2)
+	fmt.Println(checkTrees(s, 1, 2), 1, 2)
 
 	fmt.Println(result)
 }
