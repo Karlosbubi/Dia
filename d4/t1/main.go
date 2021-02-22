@@ -84,6 +84,7 @@ func main() {
 			i++
 		}
 		fmt.Println(k)
+		k = ""
 	}
 
 	//fmt.Println(s)
