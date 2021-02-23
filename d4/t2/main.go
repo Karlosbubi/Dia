@@ -4,18 +4,20 @@ import (
 	"fmt"
 	"io/ioutil"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
 type passport struct {
-	byr string //(Birth Year)
-	iyr string //(Issue Year)
-	eyr string //(Expiration Year)
-	ecl string //(Eye Color)
-	pid string //(Passport ID)
-	cid string //(Country ID)
-	hgt string //(Height)
-	hcl string //(Hair Color)
+	cid    string //(Country ID)
+	byr    int    //(Birth Year)
+	iyr    int    //(Issue Year)
+	eyr    int    //(Expiration Year)
+	ecl    string //(Eye Color)
+	pid    int    //(Passport ID)
+	hgt    int    //(Height)
+	hgt_in bool   //(Height in - cm = true, in = false)
+	hcl    string //(Hair Color)
 }
 
 func check(e error) {
@@ -31,14 +33,15 @@ func replaceAtIndex(in string, r rune, i int) string {
 }
 
 func stringToPassport(s string) passport {
-	p := passport{byr: "",
-		iyr: "",
-		eyr: "",
-		hgt: "",
-		hcl: "",
-		ecl: "",
-		pid: "",
-		cid: ""}
+	p := passport{byr: 0,
+		iyr:    0,
+		eyr:    0,
+		hgt:    0,
+		hgt_in: true,
+		hcl:    "",
+		ecl:    "",
+		pid:    0,
+		cid:    ""}
 
 	byrReg, _ := regexp.Compile(`byr:(\S+)`)
 	iyrReg, _ := regexp.Compile(`iyr:(\S+)`)
@@ -49,13 +52,14 @@ func stringToPassport(s string) passport {
 	pidReg, _ := regexp.Compile(`pid:(\S+)`)
 	//cidReg, _ := regexp.Compile(`cid:(\S+)`)
 
-	p.byr = byrReg.FindString(s)
-	p.iyr = iyrReg.FindString(s)
-	p.eyr = eyrReg.FindString(s)
-	p.hgt = hgtReg.FindString(s)
+	p.byr, _ = strconv.Atoi(byrReg.FindString(s))
+	p.iyr, _ = strconv.Atoi(iyrReg.FindString(s))
+	p.eyr, _ = strconv.Atoi(eyrReg.FindString(s))
+	p.hgt, _ = strconv.Atoi(hgtReg.FindString(s))
+	p.pid, _ = strconv.Atoi(pidReg.FindString(s))
 	p.hcl = hclReg.FindString(s)
 	p.ecl = eclReg.FindString(s)
-	p.pid = pidReg.FindString(s)
+
 	//p.cid = cidReg.FindString(s)
 
 	//byr:%v iyr:%v eyr:%v {hgt:%vcm hgt:%vin} hcl:%v ecl:%v pid:%v cid:%v
@@ -93,7 +97,7 @@ func checkPassport(p passport) bool {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d4/t1/test.txt")
+	dat, err := ioutil.ReadFile("d4/t1/input.txt")
 	check(err)
 
 	//fmt.Println(string(dat))
