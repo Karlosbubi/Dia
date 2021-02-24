@@ -93,7 +93,7 @@ func checkPassport(p passport) bool {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d4/t1/test.txt")
+	dat, err := ioutil.ReadFile("d4/t1/input.txt")
 	check(err)
 
 	//fmt.Println(string(dat))
@@ -104,9 +104,11 @@ func main() {
 	validCount := 0
 
 	s := strings.Split(string(dat), "\n")
+	s = append(s, "\n")
+	s = append(s, "")
 	k := ""
 	for i := 0; i < len(s); i++ {
-		for (s[i] != "") && (i+1 < len(s)) {
+		for (s[i] != "") && (i < len(s)) {
 			k += s[i]
 			k += " "
 			i++
@@ -124,11 +126,11 @@ func main() {
 	}
 
 	for _, p := range valid {
-		fmt.Println(p)
+		fmt.Println("V", p)
 	}
 	fmt.Printf("\n\n\n")
 	for _, p := range invalid {
-		fmt.Println(p)
+		fmt.Println("I", p)
 	}
 	fmt.Printf("\n\n\n")
 	fmt.Println(validCount)
