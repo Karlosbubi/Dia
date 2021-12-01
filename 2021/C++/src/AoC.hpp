@@ -27,8 +27,8 @@ public:
     template <typename T>
     static int run(const std::string path)
     {
-        std::cout << "Task 1 result : " << task1(readInput(path)) << "\n";
-        std::cout << "Task 2 result : " << task2(readInput(path)) << "\n";
+        std::cout << "Task 1 result : " << task1<T>(readInput<T>(path)) << "\n";
+        std::cout << "Task 2 result : " << task2<T>(readInput<T>(path)) << "\n";
 
         return 0;
     }
@@ -53,7 +53,7 @@ public:
         for (auto t2 : t_task2)
         {
             i++;
-            if (task1(t2<I>.input) != t2.output)
+            if (task1<I>(t2.input) != t2.output)
             {
                 std::cout << "Test Nr. " << i << " von Task 2 failed\n";
                 return false;

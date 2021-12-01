@@ -1,7 +1,7 @@
 tag = AoC
 
 build :
-	g++ ./src/${tag}.cpp -o ./bin/${tag}
+	g++ -std=c++17 ./src/${tag}.cpp -o ./bin/${tag}
 
 run : build
 	./bin/${tag}
