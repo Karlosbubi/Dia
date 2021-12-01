@@ -1,10 +1,17 @@
-tag = AoC
+tag = all
 
 build :
-	g++ -std=c++17 ./src/${tag}.cpp -o ./bin/${tag}
+	@g++ -std=c++17 ./src/AoC.cpp -o ./bin/AoC
 
 run : build
-	./bin/${tag}
+	@./bin/AoC ${tag}
+
+test : 
+	@g++ -std=c++17 ./src/tests.cpp -o ./bin/test
+	@./bin/test ${tag}
+
+setup :
+	cp ./util/template.hpp ./src/${tag}
 
 clean:
 	rm ./bin/*
