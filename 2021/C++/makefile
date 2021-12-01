@@ -1,4 +1,4 @@
-tag = *
+tag = AoC
 
 build :
 	g++ ./src/${tag}.cpp -o ./bin/${tag}
