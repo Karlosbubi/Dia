@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#define TYPE_I
+#define TYPE_O
+
 template <typename I, typename O>
 struct test_data
 {
@@ -21,8 +24,8 @@ namespace day1
 {
     //Test Data :
 
-    vector<test_input<TYPE_I, TYPE_O>> t_t1 = {};
-    vector<test_input<TYPE_I, TYPE_O>> t_t2 = {};
+    vector<test_data<TYPE_I, TYPE_O>> t_t1();
+    vector<test_data<TYPE_I, TYPE_O>> t_t2();
 
     //Task implemantation
 

@@ -11,7 +11,7 @@ test :
 	@./bin/test ${tag}
 
 setup :
-	cp ./util/template.hpp ./src/${tag}
+	cp ./util/template.hpp ./src/${tag}.hpp
 
 clean:
 	rm ./bin/*

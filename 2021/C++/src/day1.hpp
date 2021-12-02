@@ -5,6 +5,8 @@
 
 using namespace std;
 
+#ifndef test_input
+#define test_input
 template <typename I, typename O>
 struct test_data
 {
@@ -16,6 +18,7 @@ struct test_data
         output = out;
     }
 };
+#endif
 
 namespace day1
 {

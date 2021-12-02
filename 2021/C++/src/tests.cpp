@@ -6,6 +6,7 @@
 using namespace std;
 
 #include "day1.hpp"
+#include "day2.hpp"
 
 class AoC
 {
@@ -21,7 +22,7 @@ public:
             if ((func(t.input) != t.output))
             {
                 cout << "Test Nr. " << i << " von Task " << task << " failed\n";
-                cout << "Expected : \"" << t.output << "\" got : \"" << func(t.input) << "\"\n";
+                //cout << "Expected : \"" << t.output << "\" got : \"" << func(t.input) << "\"\n";
                 return false;
             }
             cout << "Test Nr. " << i << " von Task " << task << " passed\n";
@@ -40,6 +41,15 @@ public:
             if (!test<vector<int>, int>(day1::t_t1, day1::task1, 1))
                 return 1;
             if (!test<vector<int>, int>(day1::t_t2, day1::task2, 2))
+                return 1;
+
+            std::cout << "\nAll Tests Passed !\n\n";
+            break;
+
+        case 2:
+            if (!test<vector<tuple<int, string>>, tuple<int, int>>(day2::t_t1, day2::task1, 1))
+                return 1;
+            if (!test<vector<tuple<int, string>>, tuple<int, int>>(day2::t_t2, day2::task2, 2))
                 return 1;
 
             std::cout << "\nAll Tests Passed !\n\n";
