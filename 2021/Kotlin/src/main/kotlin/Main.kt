@@ -8,7 +8,7 @@ fun main() {
     Day1("src/main/resources/day1.txt").print()
     Day2("src/main/resources/day2.txt").print()
     Day3("src/main/resources/day3.txt").print()
-    //Day4("src/main/resources/day4.txt").print()
+    Day4("src/main/resources/day4.txt").print()
 }
 
 class Day1(private val path: String){
@@ -130,7 +130,7 @@ class Day2(private val path : String){
 
 class Day3(private val path : String){
     fun print(){
-        println("Day2 :")
+        println("Day3 :")
 
         print("Task 1 : ")
         println(task1(readInput()))
@@ -260,4 +260,155 @@ class Day3(private val path : String){
     }
 }
 
-//class Day4(private val path : String)
+class Day4(private val path : String){
+    fun print(){
+        println("Day4 :")
+
+        print("Task 1 : ")
+        println(task1(readInput()))
+
+        print("Task 2 : ")
+        println(task2(readInput()))
+    }
+
+    private fun readInput(): Pair<Vector<Int>, Vector<Vector<Vector<Int>>>> {
+        var text = File(path).readLines()
+
+        val draws = Vector(text.first().split(",").map { it.toInt() })
+        text = text.drop(2)
+
+        val boards = Vector<Vector<Vector<Int>>>()
+        var board = Vector<Vector<Int>>()
+
+        for (line in text) {
+            if (line != "") {
+                board.addElement(Vector(line.split(" ").map {it.toIntOrNull()}.filterNotNull()))
+            } else if (board.isNotEmpty()) {
+                boards.addElement(board)
+                board = Vector<Vector<Int>>()
+            }
+        }
+        boards.addElement(board)
+
+//        for (b in boards){
+//            println(b)
+//        }
+
+
+        return Pair(draws, boards)
+    }
+
+    private fun task1(input : Pair<Vector<Int>, Vector<Vector<Vector<Int>>>>): Int {
+        val draws = input.first
+        val boards = input.second
+
+        val hitmap = Vector(boards.map { it -> Vector( it.map{ it -> Vector(it.map {
+            it == null
+        })})})
+
+        for (i in draws){
+            for (b in boards){
+                for (r in b){
+                    for (c in r){
+                            hitmap[boards.indexOf(b)][b.indexOf(r)][r.indexOf(c)] = (c == i) || hitmap[boards.indexOf(b)][b.indexOf(r)][r.indexOf(c)]
+                    }
+                }
+            }
+
+            for (h in hitmap){
+                //check
+                val bingo = check(h)
+
+
+                //calc
+                if (bingo){
+                    return score(h, boards[hitmap.indexOf(h)], i)
+                }
+            }
+        }
+
+        return -1
+    }
+
+    private fun task2(input : Pair<Vector<Int>, Vector<Vector<Vector<Int>>>>): Int {
+        var result = 0
+
+        val draws = input.first
+        val boards = input.second
+
+        val hitmap = Vector(boards.map { it -> Vector( it.map{ it -> Vector(it.map {
+            it == null
+        })})})
+
+        for (i in draws){
+            for (b in boards){
+                for (r in b){
+                    for (c in r){
+                        hitmap[boards.indexOf(b)][b.indexOf(r)][r.indexOf(c)] = (c == i) || hitmap[boards.indexOf(b)][b.indexOf(r)][r.indexOf(c)]
+                    }
+                }
+
+            }
+
+            val dropH = Vector<Vector<Vector<Boolean>>>()
+            val dropB = Vector<Vector<Vector<Int>>>()
+            var drop = false
+            for (h in hitmap){
+                val bingo = check(h)
+
+                if (bingo){
+                    dropH.addElement(h)
+                    dropB.addElement(boards[hitmap.indexOf(h)])
+                    drop = true
+                }
+            }
+
+            if(boards.size == 1 && drop){
+                //println("")
+                //println(boards)
+                //println(hitmap)
+                return score(hitmap.lastElement(), boards.lastElement(), i)
+            }
+
+            if (drop) {
+                boards.removeAll(dropB)
+                hitmap.removeAll(dropH)
+            }
+
+        }
+
+        return result
+    }
+
+    private fun score(hit : Vector<Vector<Boolean>>, board : Vector<Vector<Int>>, multiplyer : Int): Int{
+        var result = 0
+        for(r in 0..4){
+            for(c in 0 .. 4){
+                if(!hit[r][c]){
+                    result += board[r][c]
+                }
+            }
+        }
+
+        result *= multiplyer
+        return  result
+    }
+
+    private fun check(board: Vector<Vector<Boolean>>) : Boolean {
+        var bingo = false
+        for (r in 0..4){
+            for (c in 0..4){
+                if ((board[r][0] && board[r][1] && board[r][2] && board[r][3] && board[r][4] )|| (board[0][c] && board[1][c] && board[2][c] && board[3][c] && board[4][c])){
+                    bingo = true
+                }
+            }
+        }
+
+//      if((h[0][0] && h[1][1] && h[2][2] && h[3][3] && h[4][4]) || (h[4][0]) && h[3][1] && h[2][2] && h[1][3] && h[0][4]){
+//           bingo = true
+//      }
+
+        return bingo
+    }
+
+}
