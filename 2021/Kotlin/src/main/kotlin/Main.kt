@@ -5,12 +5,64 @@ import kotlin.math.pow
 fun main() {
     println("Hello World!")
 
-    //Day1("src/main/resources/day1.txt").print() TODO
+    Day1("src/main/resources/day1.txt").print()
     Day2("src/main/resources/day2.txt").print()
     Day3("src/main/resources/day3.txt").print()
+    //Day4("src/main/resources/day4.txt").print()
 }
 
-//class Day1(private val path: String){} TODO
+class Day1(private val path: String){
+    fun print(){
+        println("Day1 :")
+
+        print("Task 1 : ")
+        println(task1(readInput()))
+
+        print("Task 2 : ")
+        println(task2(readInput()))
+    }
+
+    private fun readInput() : Vector<Int> {
+        val text : Vector<String> = Vector(File(path).readLines())
+        val result : Vector<Int> = Vector()
+
+        for (line in text) {
+            result.addElement(line.toInt())
+        }
+
+        return result
+    }
+
+    private fun task1(input : Vector<Int>) : Int {
+        var last = input.firstElement()
+        var counter = 0
+
+        for (entry in input) {
+            if (entry > last){
+                counter++
+            }
+            last = entry
+        }
+
+        return counter
+    }
+
+    private fun task2(input: Vector<Int>) : Int {
+        var last = input[0] + input[1] + input[2]
+        var sum : Int
+        var counter = 0
+
+        for (entry in 0 until  input.size - 2){
+            sum = input[entry] + input[entry + 1] + input[entry + 2]
+            if (sum > last) {
+                counter++
+            }
+            last = sum
+        }
+
+        return counter
+    }
+}
 
 class Day2(private val path : String){
 
@@ -207,3 +259,5 @@ class Day3(private val path : String){
         return binToDec(o2) * binToDec(co2)
     }
 }
+
+//class Day4(private val path : String)
