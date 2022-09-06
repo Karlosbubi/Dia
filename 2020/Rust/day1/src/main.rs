@@ -48,13 +48,25 @@ fn task2(input: Vec<i32>) -> i32 {
 }
 
 #[test]
-fn test_task1() {
+fn day1_test_task1() {
     let input: Vec<i32> = [1721, 979, 366, 299, 675, 1456].to_vec();
     assert_eq!(task1(input), 514579)
 }
 
 #[test]
-fn test_task2() {
+fn day1_test_task2() {
     let input: Vec<i32> = [1721, 979, 366, 299, 675, 1456].to_vec();
     assert_eq!(task2(input), 241861950)
+}
+
+#[test]
+fn day1_solution_task1(){
+    let input = read_input(String::from("input/input.txt"));
+    assert_eq!(task1(input), 960075)
+}
+
+#[test]
+fn day1_solution_task2(){
+    let input = read_input(String::from("input/input.txt"));
+    assert_eq!(task2(input), 212900130)
 }
