@@ -60,13 +60,13 @@ fn day1_test_task2() {
 }
 
 #[test]
-fn day1_solution_task1(){
+fn day1_solution_task1() {
     let input = read_input(String::from("input/input.txt"));
     assert_eq!(task1(input), 960075)
 }
 
 #[test]
-fn day1_solution_task2(){
+fn day1_solution_task2() {
     let input = read_input(String::from("input/input.txt"));
     assert_eq!(task2(input), 212900130)
 }
