@@ -1,4 +1,9 @@
-/2021/Kotlin/.gradle/
-*/target/
-*/Rust/*/target
-.vscode/
+**.bin
+**/target/
+**/debug/
+**.bk
+**/Cargo.lock
+**/.idea/
+**/bin/
+**/obj/
+**/.vscode/

@@ -1,8 +1,0 @@
-*.bin
-**/target/
-**/debug/
-**/*.rs.bk
-Cargo.lock
-**/.idea/
-**/bin/
-**/obj/
