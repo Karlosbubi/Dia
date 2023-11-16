@@ -20,7 +20,7 @@ func replaceAtIndex(in string, r rune, i int) string {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d3/t1/input.txt")
+	dat, err := ioutil.ReadFile("../../Inputs/2020/Day3.txt")
 	check(err)
 
 	//fmt.Println(string(dat))

@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	text := load("d6/t1/input.txt")
+	text := load("../../Inputs/2020/Day6.txt")
 	//fmt.Println(text)
 	ans := combine(text)
 	fmt.Println(ans)

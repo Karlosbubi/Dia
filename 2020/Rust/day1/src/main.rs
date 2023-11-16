@@ -8,7 +8,7 @@ fn main() {
             .display()
     );
 
-    let input = read_input(String::from("day1/input/input.txt"));
+    let input = read_input(String::from("../../Inputs/2020/Day1.txt"));
     println!("{}", task1(input.clone()));
     println!("{}", task2(input));
 }
