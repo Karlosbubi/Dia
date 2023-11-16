@@ -44,7 +44,7 @@ func checkTrees(dat []string, x int, y int) int {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d3/t2/input.txt")
+	dat, err := ioutil.ReadFile("../../Inputs/2020/Day3.txt")
 	check(err)
 
 	//fmt.Println(string(dat))

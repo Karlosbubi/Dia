@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	dat, err := ioutil.ReadFile("d5/t2/input.txt")
+	dat, err := ioutil.ReadFile("../../Inputs/2020/Day5.txt")
 	check(err)
 	s := strings.Split(string(dat), "\n")
 

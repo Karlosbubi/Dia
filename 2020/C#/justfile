@@ -1,0 +1,6 @@
+all:
+    @echo "C#"
+    @echo "----------"
+    @dotnet run --project=./d1/d1.csproj
+    @dotnet run --project=./d2/d2.csproj
+    @echo "----------"

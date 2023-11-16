@@ -45,7 +45,7 @@ func validate(s string) bool {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d2/t2/input.txt")
+	dat, err := ioutil.ReadFile("../../Inputs/2020/Day2.txt")
 	check(err)
 	//fmt.Print(string(dat))
 

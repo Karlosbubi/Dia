@@ -19,7 +19,7 @@ struct Passport {
 
 fn main() {
     println!("Hello, world!");
-    let data = readInput("day4/input/input.txt".to_string());
+    let data = readInput("../../Inputs/2020/Day4.txt".to_string());
 
     println!("task 1 : {}", task1(data.clone()));
     println!("task 2 : {}", task2(data));

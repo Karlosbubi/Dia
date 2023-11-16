@@ -1,4 +1,4 @@
-﻿var input = File.ReadAllText("./input.txt");
+﻿var input = File.ReadAllText("../../Inputs/2020/Day1.txt");
 var lines = input.Split('\n');
 var vals = from l in lines select int.Parse(l);
 

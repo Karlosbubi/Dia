@@ -51,11 +51,11 @@ fn go_slope(x: i32, y: i32, data: Vec<String>) -> i32 {
 }
 
 fn solve_t1() -> i32 {
-    go_slope(3, 1, read_input("input/input.txt".to_string()))
+    go_slope(3, 1, read_input("../../Inputs/2020/Day3.txt".to_string()))
 }
 
 fn solve_t2() -> i64 {
-    let input = read_input("input/input.txt".to_string());
+    let input = read_input("../../Inputs/2020/Day3.txt".to_string());
     let mut result: i64 = 1;
 
     result = result * i64::from(go_slope(1, 1, input.clone()));

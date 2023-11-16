@@ -16,7 +16,7 @@ struct Set {
 
 fn main() {
     println!("Hello, world!");
-    let input = read_input(String::from("day2/input/input.txt"));
+    let input = read_input(String::from("../../Inputs/2020/Day2.txt"));
 
     println!("{}", solve_t1(input.clone()));
     println!("{}", solve_t2(input));

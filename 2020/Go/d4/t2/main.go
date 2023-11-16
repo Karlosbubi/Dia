@@ -133,7 +133,7 @@ func checkPassport(p *passport) bool {
 
 func main() {
 
-	dat, err := ioutil.ReadFile("d4/t2/input.txt")
+	dat, err := ioutil.ReadFile("../../Inputs/2020/Day4.txt")
 	check(err)
 
 	//fmt.Println(string(dat))

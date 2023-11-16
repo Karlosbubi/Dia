@@ -1,0 +1,17 @@
+all:
+    @echo "Go"
+    @echo "----------"
+    @go run ./d1/t1/main.go
+    @go run ./d1/t2/main.go
+    @go run ./d2/t1/main.go
+    @go run ./d2/t2/main.go
+    @go run ./d3/t1/main.go
+    @go run ./d3/t2/main.go
+    @go run ./d4/t1/main.go
+    @go run ./d4/t2/main.go
+    @go run ./d5/t1/main.go
+    @go run ./d5/t2/main.go
+    @go run ./d6/t1/main.go
+    @go run ./d6/t2/main.go
+    @# @go run /d7/t1/main.go
+    @echo "----------"

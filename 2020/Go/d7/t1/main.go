@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(load("d7/t1/input.txt"))
+	fmt.Println(load("../../Inputs/2020/Day7.txt"))
 }
 
 func check(e error) {
