@@ -1,0 +1,15 @@
+/home/kurt/Projects/Dia/2020/C#/d2/bin/Debug/net7.0/d2
+/home/kurt/Projects/Dia/2020/C#/d2/bin/Debug/net7.0/d2.deps.json
+/home/kurt/Projects/Dia/2020/C#/d2/bin/Debug/net7.0/d2.runtimeconfig.json
+/home/kurt/Projects/Dia/2020/C#/d2/bin/Debug/net7.0/d2.dll
+/home/kurt/Projects/Dia/2020/C#/d2/bin/Debug/net7.0/d2.pdb
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.csproj.AssemblyReference.cache
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.GeneratedMSBuildEditorConfig.editorconfig
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.AssemblyInfoInputs.cache
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.AssemblyInfo.cs
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.csproj.CoreCompileInputs.cache
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.dll
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/refint/d2.dll
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.pdb
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/d2.genruntimeconfig.cache
+/home/kurt/Projects/Dia/2020/C#/d2/obj/Debug/net7.0/ref/d2.dll
