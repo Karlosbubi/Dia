@@ -1,4 +1,4 @@
-﻿var input = File.ReadAllText("../../Inputs/2020/Day2.txt");
+﻿var input = File.ReadAllText(args[0]);
 var lines = input.Split('\n');
 
 var result1 = 0; // Valid Counter

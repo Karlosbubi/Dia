@@ -1,6 +1,10 @@
+set shell := ["PowerShell"]
+
 all:
     @echo "C#"
     @echo "----------"
-    @dotnet run --project=./d1/d1.csproj
-    @dotnet run --project=./d2/d2.csproj
+    @dotnet run --project=./d1/d1.csproj -- ../../Inputs/2020/Day1.txt
+    @dotnet run --project=./d2/d2.csproj -- ../../Inputs/2020/Day2.txt
+    @dotnet run --project=./d3/d3.csproj -- ../../Inputs/2020/Day3.txt
+    @dotnet run --project=./d4/d4.csproj -- ../../Inputs/2020/Day4.txt
     @echo "----------"
