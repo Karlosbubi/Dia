@@ -1,0 +1,4 @@
+all:
+    @just ./C#/
+    @just ./Go/
+    @just ./Rust/
