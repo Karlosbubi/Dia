@@ -22,19 +22,9 @@ input.ToList().ForEach(line=>
 list1.Sort();
 list2.Sort();
 
-var diff = list1.Zip(list2, (x, y) =>
-{
-    if (x > y)
-    {
-        return x - y;
-    }
-    else
-    {
-        return y - x;
-    }
-}).ToArray();
+var diff = list1.Zip(list2, (x, y) => Math.Abs(x - y));
 
 Console.WriteLine($"Day 1 Part 1: {diff.Sum()}");
 
 var similarity = list1.Select(x => x * list2.Count(y => y == x));
-Console.WriteLine($"Day 1 Part 2: {similarity.Sum()}");
+Console.WriteLine($"Day 1 Part 2: {similarity.Sum()}"); 
