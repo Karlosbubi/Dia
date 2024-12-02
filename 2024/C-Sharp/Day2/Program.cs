@@ -23,17 +23,15 @@ bool IsReportSave(IEnumerable<int> report)
     var values = report as int[] ?? report.ToArray();
     var deltas = values.Zip(values.Skip(1), (a, b) => a - b)
         .ToArray();
-    
-    if (deltas.Any(x => Math.Abs(x) > 3))
-    {
-        return false;
-    }
 
-    if (deltas.Any(x => x == 0))
-    {
-        return false;
-    }
+    var save = true;
+    // No steps greater 3
+    save &= !(deltas.Any(x => Math.Abs(x) > 3));
+    // No stagnation
+    save &= !(deltas.Any(x => x == 0));
+    // only one direction
+    save &= deltas.Any(x => x < 0)
+            ^ deltas.Any(x => x > 0);
 
-    return deltas.Any(x => x < 0)
-           ^ deltas.Any(x => x > 0);
+    return save;
 }
