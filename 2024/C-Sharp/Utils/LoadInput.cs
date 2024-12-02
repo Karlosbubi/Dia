@@ -8,7 +8,7 @@ public static class LoadInput
 
     public static IEnumerable<string> AsLines(string day)
     {
-        var path = InputDirectory + "\\" + day + ".txt";
+        var path = InputDirectory + "/" + day + ".txt";
         return File.ReadLines(path);
     } 
 }
