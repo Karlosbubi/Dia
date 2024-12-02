@@ -6,25 +6,26 @@ Console.WriteLine("Hello, World!");
 
 var input = LoadInput.AsLines("Day1");
 
-var list1 = new List<int>();
-var list2 = new List<int>();
-
-input.ToList().ForEach(line=>
-{
-    var parts = line.Split(' ');
-    if (parts.Length >= 2)
+var (list1, list2) = input
+    .Select(line => line
+        .Split(' ')
+        .Select(value => int.TryParse(value, out var num) ? (int?)num : null)
+        .Where(num => num.HasValue)
+        .Select(num => num.Value)
+        .ToArray())
+    .Where(nums => nums.Length == 2)
+    .Aggregate((new List<int>(), new List<int>()), (acc, nums) =>
     {
-        list1.Add(int.Parse(parts.First()));
-        list2.Add(int.Parse(parts.Last()));
-    }
-});
+        acc.Item1.Add(nums[0]);
+        acc.Item2.Add(nums[1]);
+        return acc;
+    });
 
 list1.Sort();
 list2.Sort();
 
 var diff = list1.Zip(list2, (x, y) => Math.Abs(x - y));
-
 Console.WriteLine($"Day 1 Part 1: {diff.Sum()}");
 
 var similarity = list1.Select(x => x * list2.Count(y => y == x));
-Console.WriteLine($"Day 1 Part 2: {similarity.Sum()}"); 
+Console.WriteLine($"Day 1 Part 2: {similarity.Sum()}");
