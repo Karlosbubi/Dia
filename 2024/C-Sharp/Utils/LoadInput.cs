@@ -10,5 +10,11 @@ public static class LoadInput
     {
         var path = InputDirectory + "/" + day + ".txt";
         return File.ReadLines(path);
-    } 
+    }
+
+    public static string AsText(string day)
+    {
+        var path = InputDirectory + "/" + day + ".txt";
+        return File.ReadAllText(path);
+    }
 }
