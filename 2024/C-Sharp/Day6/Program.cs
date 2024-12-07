@@ -30,11 +30,7 @@ if (!test)
 
 var rows = input.Length;
 var cols = input.First().Length;
-var spots = (rows * cols) - 1;
-var spotCounter = 0;
-
-log.Debug($"rows: {rows}, cols: {cols}, spots: {spots} ");
-
+log.Debug($"rows: {rows}, cols: {cols}");
 
 (int x, int y) initialPosition = input
     .Select((l, i) => (l, i))
@@ -51,19 +47,17 @@ if (!part1.exits)
 {
     throw new Exception("Part 1 failed!");
 }
-
 log.Warning($"Part1 : {part1.visited.Match(visited => visited, () => 0)}");
 
 // F*** it, just Bruteforce.
-spotCounter = 0;
-var part2 = GernerateMaps(map, log).Select(m => ComputeMap(m, initialPosition)).Count(x => !x.exits);
+var spots = part1.spots;
+var part2 = GernerateMaps(map, spots, log).Select(m => ComputeMap(m, initialPosition)).Count(x => !x.exits);
 log.Warning($"Part2 : {part2}");
-
 
 return;
 
 
-(bool exits, Option<int> visited) ComputeMap(char[,] mapToCompute, (int x, int y) startingPosition)
+(bool exits, Option<int> visited, List<State> spots) ComputeMap(char[,] mapToCompute, (int x, int y) startingPosition)
 {
     log.Debug($"map starting position: {startingPosition}");
     var position = startingPosition;
@@ -121,54 +115,34 @@ return;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
         var v = new State(X: position.x, Y: position.y, Direction: direction);
-
+        
         log.Debug(v.ToString());
-
-
         if (visited.Contains(v))
         {
             looped = true;
             log.Debug(v.ToString());
         }
-
         visited.Add(v);
     }
 
     var visitedCount = visited.Select(s => (s.X, s.Y)).Distinct().Count();
 
-
-    
-    spotCounter++;
-    log.Information($"Computed map: {spotCounter}/{spots} ({(((float)spotCounter / (float)spots) * 100.0):F3}%)");
-    log.Information($"Map exited : {!looped}" + (looped ? "" : $", visited : {visitedCount}"));
-
-    return looped ? (false, Option<int>.None()) : (true, Option<int>.Some(visitedCount));
+    return looped ? (false, Option<int>.None(), visited) : (true, Option<int>.Some(visitedCount), visited);
 }
 
-IEnumerable<char[,]> GernerateMaps(char[,] baseMap, Logger logger)
+IEnumerable<char[,]> GernerateMaps(char[,] baseMap, List<State> baseSpots, Logger logger)
 {
-    for (var i = 0; i < baseMap.GetLength(0); i++)
+    var todo = baseSpots.Select(s => (s.X, s.Y)).Distinct()
+        .Where(x => !(x.X == initialPosition.x && x.Y == initialPosition.y))
+        .Where(x => baseMap[x.X, x.Y] != '#');
+        
+    foreach (var s in todo)     
     {
-        for (var j = 0; j < baseMap.GetLength(1); j++)
-        {
-            switch (baseMap[i, j])
-            {
-                case '^':
-                    continue;
-                case '#':
-                    spotCounter++;
-                    logger.Information($"Skipped map: {spotCounter}: {i}, {j} already obstruced");
-                    continue;
-                default:
-                    var newMap = baseMap.Clone() as char[,];
-                    if (newMap == null) continue;
-                    newMap[i, j] = '#';
-                    yield return newMap;
-                    break;
-            }
-        }
+        var newMap = baseMap.Clone() as char[,];
+        if (newMap == null) continue;
+        newMap[s.X, s.Y] = '#';
+        yield return newMap;
     }
 }
 
