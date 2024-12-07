@@ -1,6 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Diagnostics;
+using Serilog;
+using Serilog.Core;
 using Utils;
+
+using var log = new LoggerConfiguration().MinimumLevel.Information().WriteTo.Console().CreateLogger();
+
+var test = false;
 
 Console.WriteLine("Hello, World!");
 var input = @"
@@ -16,190 +23,179 @@ var input = @"
 ......#...
 ".Split('\n').Where(x => !string.IsNullOrWhiteSpace(x))
     .Select(x => x.Trim().ToCharArray()).ToArray();
-
-// input = LoadInput.AsChars("Day6");
+if (!test)
+{
+    input = LoadInput.AsChars("Day6");
+}
 
 var rows = input.Length;
 var cols = input.First().Length;
+var spots = (rows * cols) - 1;
+var spotCounter = 0;
 
-//Console.WriteLine($"rows: {rows}, cols: {cols} ");
+log.Debug($"rows: {rows}, cols: {cols}, spots: {spots} ");
 
-var visited = new bool[rows, cols];
 
-(int x, int y) position = input
+(int x, int y) initialPosition = input
     .Select((l, i) => (l, i))
     .Where(x => x.l.Contains('^'))
     .Select((x, i) => (x.i, x.l.Select((l, j) => (l, j)).First(x => x.l == '^').j))
     .Single();
-//Console.WriteLine($"position: {position}");
-Direction direction = Direction.Up;
+
+log.Debug($"starting position: {initialPosition}");
+
 var map = Transform.ConvertTo2D(input);
-visited[position.x, position.y] = true;
-while (position.x + 1 < rows && position.x > 0 && position.y + 1 < cols && position.y > 0)
+
+var part1 = ComputeMap(map, initialPosition);
+if (!part1.exits)
 {
-    switch (direction)
-    {
-        case Direction.Left:
-            if (map[position.x, position.y - 1] == '#')
-            {
-                direction = Direction.Up;
-            }
-            else
-            {
-                position.y--;
-            }
-            break;
-        case Direction.Down:
-            if (map[position.x + 1, position.y] == '#')
-            {
-                direction = Direction.Left;
-            }
-            else
-            {
-                position.x++;
-            }
-            break;
-        case Direction.Right:
-            if (map[position.x, position.y + 1] == '#')
-            {
-                direction = Direction.Down;
-            }
-            else
-            {
-                position.y++;
-            }
-            break;
-        case Direction.Up:
-            if (map[position.x - 1, position.y] == '#')
-            {
-                direction = Direction.Right;
-            }
-            else
-            {
-                position.x--;
-            }
-            break;
-        default:
-            throw new ArgumentOutOfRangeException
-            {
-                HelpLink = null,
-                HResult = 0,
-                Source = null
-            };
-    }
-    visited[position.x, position.y] = true;
-    map[position.x, position.y] = 'X';
-    //PrintMap(map);
+    throw new Exception("Part 1 failed!");
 }
 
-var visitedT = Transform.ConvertFrom2D(visited);
-var visitedC = visitedT.Select(x => x.Count(y => y)).Sum();
-Console.WriteLine($"Part1 : {visitedC}");
+log.Warning($"Part1 : {part1.visited.Match(visited => visited, () => 0)}");
 
-var obstructed = new bool[rows, cols];
-var states = new List<State>();
-while (position.x + 1 < rows && position.x > 0 && position.y + 1 < cols && position.y > 0)
-{
-    switch (direction)
-    {
-        case Direction.Left:
-            if (map[position.x, position.y - 1] == '#')
-            {
-                direction = Direction.Up;
-            }
-            else
-            {
-                var hypothetical = new State(X: position.x, Y: position.y, Direction: Direction.Up);
-                if (states.Any(x => x.Equals(hypothetical)))
-                {
-                    obstructed[position.x, position.y - 1] = true;
-                }
-                position.y--;
-            }
-            break;
-        case Direction.Down:
-            if (map[position.x + 1, position.y] == '#')
-            {
-                direction = Direction.Left;
-            }
-            else
-            {
-                var hypothetical = new State(X: position.x, Y: position.y, Direction: Direction.Left);
-                if (states.Any(x => x.Equals(hypothetical)))
-                {
-                    obstructed[position.x + 1, position.y] = true;
-                }
-                position.x++;
-            }
-            break;
-        case Direction.Right:
-            if (map[position.x, position.y + 1] == '#')
-            {
-                direction = Direction.Down;
-            }
-            else
-            {
-                var hypothetical = new State(X: position.x, Y: position.y, Direction: Direction.Down);
-                if (states.Any(x => x.Equals(hypothetical)))
-                {
-                    obstructed[position.x, position.y + 1] = true;
-                }
-                position.y++;
-            }
-            break;
-        case Direction.Up:
-            if (map[position.x - 1, position.y] == '#')
-            {
-                direction = Direction.Right;
-            }
-            else
-            {
-                var hypothetical = new State(X: position.x, Y: position.y, Direction: Direction.Right);
-                if (states.Any(x => x.Equals(hypothetical)))
-                {
-                    obstructed[position.x - 1, position.y] = true;
-                }
-                position.x--;
-            }
-            break;
-        default:
-            throw new ArgumentOutOfRangeException
-            {
-                HelpLink = null,
-                HResult = 0,
-                Source = null
-            };
-    }
-    states.Add(new State(X: position.x, Y: position.y, Direction: direction));
-    //PrintMap(map);
-}
+// F*** it, just Bruteforce.
+spotCounter = 0;
+var part2 = GernerateMaps(map, log).Select(m => ComputeMap(m, initialPosition)).Count(x => !x.exits);
+log.Warning($"Part2 : {part2}");
 
-var obstructedT = Transform.ConvertFrom2D(obstructed);
-var obstructedC = obstructedT.Select(x => x.Count(y => y)).Sum();
-Console.WriteLine($"Part2 : {obstructedC}");
 
 return;
 
-void PrintMap(char[,] map)
-{
-    var rows = map.GetLength(0);
-    var cols = map.GetLength(1);
 
-    for (var i = 0; i < rows; i++)
+(bool exits, Option<int> visited) ComputeMap(char[,] mapToCompute, (int x, int y) startingPosition)
+{
+    log.Debug($"map starting position: {startingPosition}");
+    var position = startingPosition;
+    var direction = Direction.Up;
+    var visited = new List<State>();
+    var looped = false;
+    while ((position.x + 1 < rows && position.x > 0 && position.y + 1 < cols && position.y > 0) && !looped)
     {
-        for (var j = 0; j < cols; j++)
+        switch (direction)
         {
-            Console.Write(map[i, j]);
+            case Direction.Left:
+                if (mapToCompute[position.x, position.y - 1] == '#')
+                {
+                    direction = Direction.Up;
+                }
+                else
+                {
+                    position.y--;
+                }
+
+                break;
+            case Direction.Down:
+                if (mapToCompute[position.x + 1, position.y] == '#')
+                {
+                    direction = Direction.Left;
+                }
+                else
+                {
+                    position.x++;
+                }
+
+                break;
+            case Direction.Right:
+                if (mapToCompute[position.x, position.y + 1] == '#')
+                {
+                    direction = Direction.Down;
+                }
+                else
+                {
+                    position.y++;
+                }
+
+                break;
+            case Direction.Up:
+                if (mapToCompute[position.x - 1, position.y] == '#')
+                {
+                    direction = Direction.Right;
+                }
+                else
+                {
+                    position.x--;
+                }
+
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        var v = new State(X: position.x, Y: position.y, Direction: direction);
+
+        log.Debug(v.ToString());
+
+
+        if (visited.Contains(v))
+        {
+            looped = true;
+            log.Debug(v.ToString());
+        }
+
+        visited.Add(v);
+    }
+
+    var visitedCount = visited.Select(s => (s.X, s.Y)).Distinct().Count();
+
+
+    
+    spotCounter++;
+    log.Information($"Computed map: {spotCounter}/{spots} ({(((float)spotCounter / (float)spots) * 100.0):F3}%)");
+    log.Information($"Map exited : {!looped}" + (looped ? "" : $", visited : {visitedCount}"));
+
+    return looped ? (false, Option<int>.None()) : (true, Option<int>.Some(visitedCount));
+}
+
+IEnumerable<char[,]> GernerateMaps(char[,] baseMap, Logger logger)
+{
+    for (var i = 0; i < baseMap.GetLength(0); i++)
+    {
+        for (var j = 0; j < baseMap.GetLength(1); j++)
+        {
+            switch (baseMap[i, j])
+            {
+                case '^':
+                    continue;
+                case '#':
+                    spotCounter++;
+                    logger.Information($"Skipped map: {spotCounter}: {i}, {j} already obstruced");
+                    continue;
+                default:
+                    var newMap = baseMap.Clone() as char[,];
+                    if (newMap == null) continue;
+                    newMap[i, j] = '#';
+                    yield return newMap;
+                    break;
+            }
+        }
+    }
+}
+
+void PrintMap(char[,] mapToPrint)
+{
+    var rowsToPrint = mapToPrint.GetLength(0);
+    var colsToPrint = mapToPrint.GetLength(1);
+
+    for (var i = 0; i < rowsToPrint; i++)
+    {
+        for (var j = 0; j < colsToPrint; j++)
+        {
+            Console.Write(mapToPrint[i, j]);
         }
 
         Console.WriteLine();
     }
-    Console.WriteLine("------------------------------");
 }
 
 enum Direction
 {
-    Up, Down, Left, Right
+    Up,
+    Down,
+    Left,
+    Right
 }
 
-record struct State(Direction Direction, int Y, int X) {}
+record struct State(Direction Direction, int Y, int X)
+{
+}

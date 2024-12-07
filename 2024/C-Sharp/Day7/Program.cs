@@ -62,7 +62,6 @@ class Calibration
 
     private IEnumerable<Operation[]> GeneratePart1Permutations()
     {
-        var permutations = new List<Operation[]>();
         var counter = 0;
         var opsCount = _parts.Count - 1;
         var permCount =  Math.Pow(2, opsCount);
@@ -91,7 +90,6 @@ class Calibration
     
     private IEnumerable<Operation[]> GeneratePart2Permutations()
     {
-        var permutations = new List<Operation[]>();
         var counter = 0;
         var opsCount = _parts.Count - 1;
         var permCount =  Math.Pow(3, opsCount);
