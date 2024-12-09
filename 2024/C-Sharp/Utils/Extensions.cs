@@ -2,7 +2,7 @@
 
 public static class Extensions
 {
-    public static IEnumerable<IEnumerable<T>> Subsets<T>(IEnumerable<T> set, int subsetSize)
+    public static IEnumerable<IEnumerable<T>> Subsets<T>(this IEnumerable<T> set, int subsetSize)
     {
         if (subsetSize < 1)
             throw new ArgumentException($"Subset size must be greater than 0. Requested : \"{subsetSize}\"", nameof(subsetSize));

@@ -61,7 +61,7 @@ foreach (var radio in radios)
         Console.WriteLine($"Analyzing radio '{radio.Key}'");
     }
 
-    var chunks = Subsets(radio.Value, 2).Select(x => x.ToArray());
+    var chunks = radio.Value.Subsets(2).Select(x => x.ToArray());
     foreach (var chunk in chunks)
     {
         var (x1, y1) = chunk[0];
@@ -96,7 +96,7 @@ foreach (var radio in radios)
         Console.WriteLine($"Analyzing radio '{radio.Key}'");
     }
 
-    var chunks = Subsets(radio.Value, 2).Select(x => x.ToArray());
+    var chunks = radio.Value.Subsets(2).Select(x => x.ToArray());
     foreach (var chunk in chunks)
     {
         var (x1, y1) = chunk[0];
