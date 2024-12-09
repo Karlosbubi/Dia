@@ -117,7 +117,7 @@ IEnumerable<Block> DefragmentPart2(IEnumerable<Block> diskBlocks)
         {
             if (debug)
             {
-                //Console.WriteLine($"File {array[i].Id}, size {array[i].Size}");
+                Console.WriteLine($"File {array[i].Id}, size {array[i].Size}");
             }
             newBlocks.Add(array[i]);
             fill.Remove(array[i]);
@@ -127,7 +127,7 @@ IEnumerable<Block> DefragmentPart2(IEnumerable<Block> diskBlocks)
             var s = array[i].Size;
             if (debug)
             {
-                //Console.WriteLine($"Empty space: {s}");
+                Console.WriteLine($"Empty space: {s}");
             }
             while (fill.Any(x => x.Size <= s))
             {
@@ -139,8 +139,8 @@ IEnumerable<Block> DefragmentPart2(IEnumerable<Block> diskBlocks)
                 array.Insert(bi, new Block{State = DiskState.Empty, Size = b.Size, Id = -1});
                 s -= b.Size;
                 if (debug)
-                {
-                    //Console.WriteLine($"Filled with: {b}");
+                { 
+                    Console.WriteLine($"Filled with: {b}");
                 }
             }
 
@@ -148,15 +148,13 @@ IEnumerable<Block> DefragmentPart2(IEnumerable<Block> diskBlocks)
         }
     }
     
-    var evenNewerBlocks = new List<Block>();
     foreach (var block in newBlocks)
     {
         for (var i = 0; i < block.Size; i++)
         {
-            evenNewerBlocks.Add(block);
+            yield return block;
         }
     }
-    return evenNewerBlocks;
 }
 
 record struct Block
