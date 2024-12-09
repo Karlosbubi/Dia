@@ -31,9 +31,9 @@ if (debug)
 
 var calibrations = input.Where(s=> !string.IsNullOrWhiteSpace(s)).Select(s => new Calibration(s, debug || test)).ToArray();
 
-var part1 = calibrations.Select(c => c.Part1()).Sum();
+var part1 = calibrations.Select(c => c.Part1).Sum();
 Console.WriteLine($"Part 1: {part1}");
-var part2 = calibrations.Select(c => c.Part2()).Sum();
+var part2 = calibrations.Select(c => c.Part2).Sum();
 Console.WriteLine($"Part 2: {part2}");
 
 class Calibration
@@ -191,8 +191,8 @@ class Calibration
         return string.Join(' ', _parts.Zip(ops, (s, o) => $"{s} {o}")) + $" {_parts.Last()}";
     }
     
-    public long Part1() => _part1Permutations.Select(EvaluatePart1Permutation).Any(x => x.valid) ? _value : 0;
-    public long Part2() => _part2Permutations.Select(EvaluatePart2Permutation).Any(x => x.valid) ? _value : 0;
+    public long Part1 => _part1Permutations.Select(EvaluatePart1Permutation).Any(x => x.valid) ? _value : 0;
+    public long Part2 => _part2Permutations.Select(EvaluatePart2Permutation).Any(x => x.valid) ? _value : 0;
 }
 
 enum Operation
